@@ -1,5 +1,5 @@
 import { CreateAccountDto } from '../dto/create-account.dto';
-import { UpdateAccountDto } from "../dto/update-account.dto";
+import { UpdateAccountDto } from '../dto/update-account.dto';
 
 export interface AccountRepository {
   create(account: CreateAccountDto): Promise<string>;
