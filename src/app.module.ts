@@ -4,10 +4,11 @@ import { AppService } from './app.service';
 import { WalletModule } from './wallet/wallet.module';
 import { AccountModule } from './account/account.module';
 import { ConfigModule } from '@nestjs/config';
+import { PrismaService } from './prisma/prisma.service';
 
 @Module({
   imports: [WalletModule, AccountModule, ConfigModule.forRoot()],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, PrismaService],
 })
 export class AppModule {}
