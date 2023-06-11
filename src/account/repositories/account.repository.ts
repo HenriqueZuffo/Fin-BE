@@ -1,9 +1,10 @@
 import { CreateAccountDto } from '../dto/create-account.dto';
 import { UpdateAccountDto } from '../dto/update-account.dto';
-
-export interface AccountRepository {
-  create(account: CreateAccountDto): Promise<string>;
-  update(account: UpdateAccountDto): Promise<void>;
-  delete(id: number): Promise<void>;
-  login(id: number): Promise<boolean>;
+import { Injectable } from '@nestjs/common';
+@Injectable()
+export abstract class AccountRepository {
+  abstract create(account: CreateAccountDto): Promise<void>;
+  abstract update(account: UpdateAccountDto): Promise<void>;
+  abstract delete(id: number): Promise<void>;
+  abstract login(id: number): Promise<boolean>;
 }
