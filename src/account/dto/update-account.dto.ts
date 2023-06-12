@@ -1,6 +1,4 @@
-export class UpdateAccountDto {
-  id: number;
-  name: string;
-  password: string;
-  email: string;
-}
+import { CreateAccountDto } from './create-account.dto';
+import { PartialType } from '@nestjs/mapped-types';
+
+export class UpdateAccountDto extends PartialType(CreateAccountDto) {}
