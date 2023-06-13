@@ -19,7 +19,8 @@ export class AccountController {
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() account: CreateAccountDto) {
     try {
-      return await this.accountService.create(account);
+      await this.accountService.create(account);
+      return;
     } catch (err) {
       AppUtils.trataExceptions(err);
     }
