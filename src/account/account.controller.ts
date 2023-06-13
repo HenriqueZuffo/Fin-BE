@@ -1,7 +1,15 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpException,
+  HttpStatus,
+  Post,
+} from '@nestjs/common';
 import { AccountService } from './account.service';
 import { CreateAccountDto } from './dto/create-account.dto';
-import { Response } from 'express';
+import { Prisma } from '@prisma/client';
+import { AppUtils } from "../app.utils";
 
 @Controller('account')
 export class AccountController {
@@ -9,11 +17,11 @@ export class AccountController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async create(@Body() account: CreateAccountDto, res: Response) {
+  async create(@Body() account: CreateAccountDto) {
     try {
-      return this.accountService.create(account);
+      return await this.accountService.create(account);
     } catch (err) {
-      res.status(HttpStatus.UNPROCESSABLE_ENTITY).json(err.message());
+      AppUtils.trataExceptions(err);
     }
   }
 }

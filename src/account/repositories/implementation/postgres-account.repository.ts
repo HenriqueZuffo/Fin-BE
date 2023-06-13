@@ -3,18 +3,17 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../prisma/prisma.service';
 import { UpdateAccountDto } from '../../dto/update-account.dto';
 import { CreateAccountDto } from '../../dto/create-account.dto';
+import { AccountEntity } from '../../entities/account.entity';
 
 @Injectable()
 export class PostgresAccountRepository extends AccountRepository {
   constructor(private readonly prisma: PrismaService) {
     super();
   }
-  async create(account: CreateAccountDto): Promise<void> {
-    await this.prisma.account.create({
+  async create(account: CreateAccountDto): Promise<AccountEntity> {
+    return this.prisma.account.create({
       data: account,
     });
-
-    return;
   }
 
   async delete(id: number): Promise<void> {
