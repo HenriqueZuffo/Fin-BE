@@ -5,6 +5,7 @@ import { AccountEntity } from './entities/account.entity';
 import { AccountRepository } from './repositories/account.repository';
 import { PrismaService } from '../prisma/prisma.service';
 import { faker } from '@faker-js/faker';
+import { UpdateAccountDto } from './dto/update-account.dto';
 
 describe('AccountService', () => {
   let service: AccountService;
@@ -20,6 +21,7 @@ describe('AccountService', () => {
             create: jest.fn(),
             login: jest.fn(),
             delete: jest.fn(),
+            update: jest.fn(),
           },
         },
         PrismaService,
@@ -35,7 +37,7 @@ describe('AccountService', () => {
   });
 
   it('should create an account', async () => {
-    const dto = createAGenericAccountDTO();
+    const dto = createAGenericAccountDTO('create') as CreateAccountDto;
     const expectOutputCreateAccount = createEntityFromDto(dto);
 
     jest
@@ -71,14 +73,46 @@ describe('AccountService', () => {
     expect(output).toEqual(expectedOutput);
     expect(repository.delete).toHaveBeenCalled();
   });
+
+  it('should be update an account', async () => {
+    jest.spyOn(repository, 'update').mockResolvedValue(null);
+    const updateDTO = createAGenericAccountDTO('update') as UpdateAccountDto;
+    const expectedOutput = null;
+    const output = await service.update(updateDTO);
+    expect(output).toEqual(expectedOutput);
+    expect(repository.update).toHaveBeenCalled();
+  });
 });
 
-function createAGenericAccountDTO(): CreateAccountDto {
-  const accoutDTO = new CreateAccountDto();
-  accoutDTO.email = faker.internet.email();
-  accoutDTO.name = faker.internet.displayName();
-  accoutDTO.password = faker.internet.password();
-  return accoutDTO;
+function createAGenericAccountDTO(
+  typeReturn: 'create' | 'update',
+): CreateAccountDto | UpdateAccountDto {
+  let accountDto: CreateAccountDto | UpdateAccountDto;
+
+  switch (typeReturn) {
+    case 'create':
+      accountDto = new CreateAccountDto();
+      accountDto.email = faker.internet.email();
+      accountDto.name = faker.internet.displayName();
+      accountDto.password = faker.internet.password();
+      break;
+
+    case 'update':
+      accountDto = new UpdateAccountDto({
+        email: faker.internet.email(),
+        password: faker.internet.password(),
+        name: faker.internet.displayName(),
+      });
+      break;
+
+    default:
+      accountDto = new CreateAccountDto();
+      accountDto.email = faker.internet.email();
+      accountDto.name = faker.internet.displayName();
+      accountDto.password = faker.internet.password();
+      break;
+  }
+  return accountDto;
 }
 
 function createEntityFromDto(dto: CreateAccountDto): AccountEntity {

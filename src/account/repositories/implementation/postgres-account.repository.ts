@@ -38,6 +38,13 @@ export class PostgresAccountRepository extends AccountRepository {
   }
 
   async update(account: UpdateAccountDto): Promise<void> {
-    return Promise.resolve(undefined);
+    await this.prisma.account.update({
+      data: account,
+      where: {
+        id: account.id,
+      },
+    });
+
+    return;
   }
 }

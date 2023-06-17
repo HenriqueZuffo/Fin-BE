@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { AccountRepository } from './repositories/account.repository';
+import { UpdateAccountDto } from './dto/update-account.dto';
 
 @Injectable()
 export class AccountService {
@@ -16,5 +17,9 @@ export class AccountService {
 
   async delete(id: number) {
     return await this.accountRepository.delete(id);
+  }
+
+  async update(account: UpdateAccountDto) {
+    return this.accountRepository.update(account);
   }
 }
