@@ -16,9 +16,8 @@ describe('AccountService', () => {
         {
           provide: AccountRepository,
           useValue: {
-            create: jest
-              .fn()
-              .mockReturnValue(createEntityFromDto(createAGenericAccountDTO())),
+            create: jest.fn(),
+            login: jest.fn(),
           },
         },
         PrismaService,
@@ -36,9 +35,20 @@ describe('AccountService', () => {
   it('should create an account', async () => {
     const dto = createAGenericAccountDTO();
     const expectOutputCreateAccount = createEntityFromDto(dto);
+
+    jest
+      .spyOn(repository, 'create')
+      .mockResolvedValue(expectOutputCreateAccount);
+
     const newAccount = await service.create(dto);
     expect(newAccount).toEqual(expectOutputCreateAccount);
     expect(repository.create).toHaveBeenCalled();
+  });
+
+  it('should return true for existing id', async () => {
+    jest.spyOn(repository, 'login').mockResolvedValue(true);
+    const isValidId = await service.login(1);
+    expect(isValidId).toBe(true);
   });
 });
 
@@ -52,8 +62,6 @@ function createAGenericAccountDTO(): CreateAccountDto {
 
 function createEntityFromDto(dto: CreateAccountDto): AccountEntity {
   const accountEntity = new AccountEntity();
-  accountEntity.password = dto.password;
-  accountEntity.name = dto.name;
-  accountEntity.email = dto.email;
+  Object.assign(accountEntity, dto);
   return accountEntity;
 }

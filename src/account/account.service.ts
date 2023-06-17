@@ -9,4 +9,8 @@ export class AccountService {
   async create(account: CreateAccountDto) {
     return await this.accountRepository.create(account);
   }
+
+  async login(id: number) {
+    return await this.accountRepository.login(id);
+  }
 }

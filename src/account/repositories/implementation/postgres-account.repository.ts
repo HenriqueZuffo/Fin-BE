@@ -21,7 +21,13 @@ export class PostgresAccountRepository extends AccountRepository {
   }
 
   async login(id: number): Promise<boolean> {
-    return Promise.resolve(false);
+    const account = this.prisma.account.findUnique({
+      where: {
+        id: id,
+      },
+    });
+
+    return account != null;
   }
 
   async update(account: UpdateAccountDto): Promise<void> {
