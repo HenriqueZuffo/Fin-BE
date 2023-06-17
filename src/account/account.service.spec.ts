@@ -4,7 +4,7 @@ import { CreateAccountDto } from './dto/create-account.dto';
 import { AccountEntity } from './entities/account.entity';
 import { AccountRepository } from './repositories/account.repository';
 import { PrismaService } from '../prisma/prisma.service';
-import { faker } from "@faker-js/faker";
+import { faker } from '@faker-js/faker';
 
 describe('AccountService', () => {
   let service: AccountService;
