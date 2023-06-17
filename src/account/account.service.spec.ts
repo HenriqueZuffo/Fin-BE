@@ -4,6 +4,7 @@ import { CreateAccountDto } from './dto/create-account.dto';
 import { AccountEntity } from './entities/account.entity';
 import { AccountRepository } from './repositories/account.repository';
 import { PrismaService } from '../prisma/prisma.service';
+import { faker } from "@faker-js/faker";
 
 describe('AccountService', () => {
   let service: AccountService;
@@ -64,9 +65,9 @@ describe('AccountService', () => {
 
 function createAGenericAccountDTO(): CreateAccountDto {
   const accoutDTO = new CreateAccountDto();
-  accoutDTO.email = 'teste@gmail.com';
-  accoutDTO.name = 'teste';
-  accoutDTO.password = 'teste';
+  accoutDTO.email = faker.internet.email();
+  accoutDTO.name = faker.internet.displayName();
+  accoutDTO.password = faker.internet.password();
   return accoutDTO;
 }
 
