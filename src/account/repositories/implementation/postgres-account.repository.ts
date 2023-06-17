@@ -16,8 +16,14 @@ export class PostgresAccountRepository extends AccountRepository {
     });
   }
 
-  async delete(id: number): Promise<void> {
-    return Promise.resolve(undefined);
+  async delete(accountId: number): Promise<void> {
+    this.prisma.account.delete({
+      where: {
+        id: accountId,
+      },
+    });
+
+    return;
   }
 
   async login(accountId: number): Promise<number> {

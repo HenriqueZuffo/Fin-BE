@@ -19,6 +19,7 @@ describe('AccountService', () => {
           useValue: {
             create: jest.fn(),
             login: jest.fn(),
+            delete: jest.fn(),
           },
         },
         PrismaService,
@@ -60,6 +61,15 @@ describe('AccountService', () => {
 
     expect(idAccount).toBe(0);
     expect(repository.login).toHaveBeenCalled();
+  });
+
+  it('should return null when delete an account', async () => {
+    jest.spyOn(repository, 'delete').mockResolvedValue(null);
+    const expectedOutput = null;
+    const output = await service.delete(1);
+
+    expect(output).toEqual(expectedOutput);
+    expect(repository.delete).toHaveBeenCalled();
   });
 });
 

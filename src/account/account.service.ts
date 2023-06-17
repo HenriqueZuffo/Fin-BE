@@ -13,4 +13,8 @@ export class AccountService {
   async login(id: number) {
     return await this.accountRepository.login(id);
   }
+
+  async delete(id: number) {
+    return await this.accountRepository.delete(id);
+  }
 }

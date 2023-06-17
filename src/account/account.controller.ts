@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -30,6 +31,15 @@ export class AccountController {
   async login(@Param('id') id: number) {
     try {
       return this.accountService.login(id);
+    } catch (err) {
+      AppUtils.trataExceptions(err);
+    }
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: number) {
+    try {
+      return this.accountService.delete(id);
     } catch (err) {
       AppUtils.trataExceptions(err);
     }
