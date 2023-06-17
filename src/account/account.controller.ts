@@ -29,7 +29,6 @@ export class AccountController {
   async login(@Param('id') id: number) {
     try {
       return this.accountService.login(id);
-
     } catch (err) {
       AppUtils.trataExceptions(err);
     }

@@ -7,5 +7,5 @@ export abstract class AccountRepository {
   abstract create(account: CreateAccountDto): Promise<AccountEntity>;
   abstract update(account: UpdateAccountDto): Promise<void>;
   abstract delete(id: number): Promise<void>;
-  abstract login(id: number): Promise<boolean>;
+  abstract login(id: number): Promise<number>;
 }

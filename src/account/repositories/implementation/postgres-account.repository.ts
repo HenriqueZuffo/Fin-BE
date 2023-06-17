@@ -20,14 +20,15 @@ export class PostgresAccountRepository extends AccountRepository {
     return Promise.resolve(undefined);
   }
 
-  async login(accountId: number): Promise<boolean> {
+  async login(accountId: number): Promise<number> {
+    //TODO: refatorar para receber usuário e senha e retornar o id, fazer isso apos implementação do jwt ou algum auth da vida ai
     const account = await this.prisma.account.findFirst({
       where: {
         id: accountId,
       },
     });
 
-    return !!account;
+    return account?.id > 0 ? account.id : 0;
   }
 
   async update(account: UpdateAccountDto): Promise<void> {
