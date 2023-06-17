@@ -48,7 +48,17 @@ describe('AccountService', () => {
   it('should return true for existing id', async () => {
     jest.spyOn(repository, 'login').mockResolvedValue(true);
     const isValidId = await service.login(1);
+
     expect(isValidId).toBe(true);
+    expect(repository.login).toHaveBeenCalled();
+  });
+
+  it('should return false for a not existing id', async () => {
+    jest.spyOn(repository, 'login').mockResolvedValue(false);
+    const isValidId = await service.login(2);
+
+    expect(isValidId).toBe(false);
+    expect(repository.login).toHaveBeenCalled();
   });
 });
 
