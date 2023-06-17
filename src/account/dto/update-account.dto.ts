@@ -1,4 +1,8 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { AccountEntity } from '../entities/account.entity';
+import { CreateAccountDto } from './create-account.dto';
+import { IsNotEmpty } from 'class-validator';
 
-export class UpdateAccountDto extends PartialType(AccountEntity) {}
+export class UpdateAccountDto extends PartialType(CreateAccountDto) {
+  @IsNotEmpty()
+  id: number;
+}

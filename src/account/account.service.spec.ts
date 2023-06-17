@@ -99,6 +99,7 @@ function createAGenericAccountDTO(
 
     case 'update':
       accountDto = new UpdateAccountDto({
+        id: 1,
         email: faker.internet.email(),
         password: faker.internet.password(),
         name: faker.internet.displayName(),

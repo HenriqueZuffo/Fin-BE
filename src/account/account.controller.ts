@@ -5,12 +5,13 @@ import {
   Get,
   HttpCode,
   HttpStatus,
-  Param,
-  Post,
-} from '@nestjs/common';
+  Param, Patch,
+  Post
+} from "@nestjs/common";
 import { AccountService } from './account.service';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { AppUtils } from '../app.utils';
+import { UpdateAccountDto } from "./dto/update-account.dto";
 
 @Controller('account')
 export class AccountController {
@@ -41,6 +42,15 @@ export class AccountController {
     try {
       return this.accountService.delete(id);
     } catch (err) {
+      AppUtils.trataExceptions(err);
+    }
+  }
+
+  @Patch()
+  async update(@Body() accountDTO: UpdateAccountDto){
+    try{
+      return this.accountService.update(accountDTO);
+    }catch(err){
       AppUtils.trataExceptions(err);
     }
   }
