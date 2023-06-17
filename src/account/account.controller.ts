@@ -1,4 +1,11 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus, Param,
+  Post
+} from "@nestjs/common";
 import { AccountService } from './account.service';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { AppUtils } from '../app.utils';
@@ -13,6 +20,16 @@ export class AccountController {
     try {
       await this.accountService.create(account);
       return;
+    } catch (err) {
+      AppUtils.trataExceptions(err);
+    }
+  }
+
+  @Get(':id')
+  async login(@Param('id') id: number) {
+    try {
+      return this.accountService.login(id);
+
     } catch (err) {
       AppUtils.trataExceptions(err);
     }
