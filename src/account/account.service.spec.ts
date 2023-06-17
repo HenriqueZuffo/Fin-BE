@@ -16,7 +16,9 @@ describe('AccountService', () => {
         {
           provide: AccountRepository,
           useValue: {
-            create: jest.fn().mockReturnValue(createEntityFromDto(createAGenericAccountDTO())),
+            create: jest
+              .fn()
+              .mockReturnValue(createEntityFromDto(createAGenericAccountDTO())),
           },
         },
         PrismaService,
@@ -48,7 +50,7 @@ function createAGenericAccountDTO(): CreateAccountDto {
   return accoutDTO;
 }
 
-function createEntityFromDto(dto: CreateAccountDto): AccountEntity{
+function createEntityFromDto(dto: CreateAccountDto): AccountEntity {
   const accountEntity = new AccountEntity();
   accountEntity.password = dto.password;
   accountEntity.name = dto.name;
