@@ -3,9 +3,10 @@ import {
   Controller,
   Get,
   HttpCode,
-  HttpStatus, Param,
-  Post
-} from "@nestjs/common";
+  HttpStatus,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { AccountService } from './account.service';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { AppUtils } from '../app.utils';
