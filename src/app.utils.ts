@@ -1,5 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { HttpException, HttpStatus } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 
 export abstract class AppUtils {
   public static trataExceptions(err) {
@@ -17,5 +18,17 @@ export abstract class AppUtils {
     } else {
       throw new HttpException(err.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+
+  public static requiredMessage(field: string): string {
+    return `${field} é de preenchimento obrigatório!`;
+  }
+
+  public static async crypt(str: string): Promise<string> {
+    console.log(`${!str} && ${str}`);
+    if (!str) return;
+    const salt = Number(process.env.SALT);
+
+    return bcrypt.hash(str, salt);
   }
 }

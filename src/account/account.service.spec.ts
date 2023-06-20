@@ -46,6 +46,7 @@ describe('AccountService', () => {
 
     const newAccount = await service.create(dto);
     expect(newAccount).toEqual(expectOutputCreateAccount);
+    expect(newAccount.password).toEqual(dto.password);
     expect(repository.create).toHaveBeenCalled();
   });
 

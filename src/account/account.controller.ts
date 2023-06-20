@@ -5,13 +5,14 @@ import {
   Get,
   HttpCode,
   HttpStatus,
-  Param, Patch,
-  Post
-} from "@nestjs/common";
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { AccountService } from './account.service';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { AppUtils } from '../app.utils';
-import { UpdateAccountDto } from "./dto/update-account.dto";
+import { UpdateAccountDto } from './dto/update-account.dto';
 
 @Controller('account')
 export class AccountController {
@@ -21,6 +22,8 @@ export class AccountController {
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() account: CreateAccountDto) {
     try {
+      const hash = await AppUtils.crypt(account.password);
+      account.password = hash;
       await this.accountService.create(account);
       return;
     } catch (err) {
@@ -47,10 +50,10 @@ export class AccountController {
   }
 
   @Patch()
-  async update(@Body() accountDTO: UpdateAccountDto){
-    try{
+  async update(@Body() accountDTO: UpdateAccountDto) {
+    try {
       return this.accountService.update(accountDTO);
-    }catch(err){
+    } catch (err) {
       AppUtils.trataExceptions(err);
     }
   }
