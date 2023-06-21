@@ -1,6 +1,5 @@
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { AppUtils } from '../../app.utils';
-import { Transform } from 'class-transformer';
 
 export class CreateAccountDto {
   @IsString()
