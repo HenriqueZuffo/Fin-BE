@@ -25,7 +25,6 @@ export abstract class AppUtils {
   }
 
   public static async crypt(str: string): Promise<string> {
-    console.log(`${!str} && ${str}`);
     if (!str) return;
     const salt = Number(process.env.SALT);
 

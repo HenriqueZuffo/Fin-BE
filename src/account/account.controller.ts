@@ -22,8 +22,8 @@ export class AccountController {
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() account: CreateAccountDto) {
     try {
-      const hash = await AppUtils.crypt(account.password);
-      account.password = hash;
+      account.password = await AppUtils.crypt(account.password);
+
       await this.accountService.create(account);
       return;
     } catch (err) {
@@ -52,6 +52,10 @@ export class AccountController {
   @Patch()
   async update(@Body() accountDTO: UpdateAccountDto) {
     try {
+      if (accountDTO?.password) {
+        accountDTO.password = await AppUtils.crypt(accountDTO.password);
+      }
+
       return this.accountService.update(accountDTO);
     } catch (err) {
       AppUtils.trataExceptions(err);
