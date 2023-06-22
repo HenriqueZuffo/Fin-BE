@@ -10,6 +10,7 @@ export class PostgresAccountRepository extends AccountRepository {
   constructor(private readonly prisma: PrismaService) {
     super();
   }
+
   async create(account: CreateAccountDto): Promise<AccountEntity> {
     return this.prisma.account.create({
       data: account,
@@ -17,7 +18,7 @@ export class PostgresAccountRepository extends AccountRepository {
   }
 
   async delete(accountId: number): Promise<void> {
-    this.prisma.account.delete({
+    await this.prisma.account.delete({
       where: {
         id: accountId,
       },
