@@ -4,6 +4,7 @@ import { PrismaService } from '../../../prisma/prisma.service';
 import { UpdateAccountDto } from '../../dto/update-account.dto';
 import { CreateAccountDto } from '../../dto/create-account.dto';
 import { AccountEntity } from '../../entities/account.entity';
+import { LoginAccountDto } from '../../dto/login-account.dto';
 
 @Injectable()
 export class PostgresAccountRepository extends AccountRepository {
@@ -27,15 +28,13 @@ export class PostgresAccountRepository extends AccountRepository {
     return;
   }
 
-  async login(accountId: number): Promise<number> {
+  async login(loginAccountDto: LoginAccountDto): Promise<AccountEntity> {
     //TODO: refatorar para receber usuário e senha e retornar o id, fazer isso apos implementação do jwt ou algum auth da vida ai
-    const account = await this.prisma.account.findFirst({
+    return this.prisma.account.findFirst({
       where: {
-        id: accountId,
+        email: loginAccountDto.email,
       },
     });
-
-    return account?.id > 0 ? account.id : 0;
   }
 
   async update(account: UpdateAccountDto): Promise<void> {
@@ -47,5 +46,13 @@ export class PostgresAccountRepository extends AccountRepository {
     });
 
     return;
+  }
+
+  async getById(id: number): Promise<AccountEntity> {
+    return this.prisma.account.findFirst({
+      where: {
+        id: id,
+      },
+    });
   }
 }

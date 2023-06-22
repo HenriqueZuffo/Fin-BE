@@ -6,6 +6,7 @@ export abstract class AppUtils {
   public static trataExceptions(err) {
     console.log(err.message);
     console.log(err.stack);
+
     if (err instanceof Prisma.PrismaClientKnownRequestError) {
       if (err.code === 'P2002') {
         throw new HttpException(
@@ -15,6 +16,9 @@ export abstract class AppUtils {
       } else {
         throw new HttpException(err.message, HttpStatus.INTERNAL_SERVER_ERROR);
       }
+    } else if (err instanceof HttpException) {
+      // Se for um HttpException não preciso trata-lo apenas mando pra frente e show de bola
+      throw err;
     } else {
       throw new HttpException(err.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }

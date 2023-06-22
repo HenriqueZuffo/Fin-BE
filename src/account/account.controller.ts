@@ -13,6 +13,7 @@ import { AccountService } from './account.service';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { AppUtils } from '../app.utils';
 import { UpdateAccountDto } from './dto/update-account.dto';
+import { LoginAccountDto } from './dto/login-account.dto';
 
 @Controller('account')
 export class AccountController {
@@ -31,10 +32,11 @@ export class AccountController {
     }
   }
 
-  @Get(':id')
-  async login(@Param('id') id: number) {
+  @Post('login')
+  @HttpCode(HttpStatus.OK)
+  async login(@Body() loginAccount: LoginAccountDto) {
     try {
-      return this.accountService.login(id);
+      return this.accountService.login(loginAccount);
     } catch (err) {
       AppUtils.trataExceptions(err);
     }
