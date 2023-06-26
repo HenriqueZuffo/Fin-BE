@@ -44,4 +44,13 @@ export class AccountService {
   async update(account: UpdateAccountDto) {
     return this.accountRepository.update(account);
   }
+
+  async getById(id: number) {
+    const account = await this.accountRepository.getById(id);
+    if (!account) {
+      throw new HttpException('Conta inexistente', HttpStatus.BAD_REQUEST);
+    }
+
+    return account;
+  }
 }

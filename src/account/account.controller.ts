@@ -13,10 +13,14 @@ import { CreateAccountDto } from './dto/create-account.dto';
 import { AppUtils } from '../app.utils';
 import { UpdateAccountDto } from './dto/update-account.dto';
 import { LoginAccountDto } from './dto/login-account.dto';
+import { AuthService } from '../auth/auth.service';
 
 @Controller('account')
 export class AccountController {
-  constructor(private readonly accountService: AccountService) {}
+  constructor(
+    private readonly accountService: AccountService,
+    private readonly authService: AuthService,
+  ) {}
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
@@ -24,8 +28,11 @@ export class AccountController {
     try {
       account.password = await AppUtils.crypt(account.password);
 
-      await this.accountService.create(account);
-      return;
+      const createdAccount = await this.accountService.create(account);
+      return this.authService.signIn(
+        createdAccount.id,
+        createdAccount.password,
+      );
     } catch (err) {
       AppUtils.trataExceptions(err);
     }
