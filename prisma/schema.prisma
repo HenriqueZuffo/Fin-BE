@@ -12,14 +12,13 @@ datasource db {
 
 // MODELS
 
-model Account{
-  @@map("account")
-  id Int @id @default(autoincrement())
-  name String
-  password String
-  email String @unique
+model Users {
+  id         Int      @id @default(autoincrement())
+  name       String
+  password   String
+  email      String   @unique
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
+  @@map("users")
 }
-

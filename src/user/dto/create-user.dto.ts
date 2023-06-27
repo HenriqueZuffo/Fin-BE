@@ -1,7 +1,7 @@
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { AppUtils } from '../../app.utils';
 
-export class CreateAccountDto {
+export class CreateUserDto {
   @IsString()
   @IsNotEmpty({ message: AppUtils.requiredMessage('nome') })
   name: string;

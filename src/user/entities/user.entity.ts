@@ -1,6 +1,6 @@
 import { Account } from '@prisma/client';
 
-export class AccountEntity implements Account {
+export class UserEntity implements Account {
   id: number;
   name: string;
   email: string;
