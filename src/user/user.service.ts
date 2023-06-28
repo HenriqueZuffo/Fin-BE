@@ -5,31 +5,40 @@ import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly accountRepository: UserRepository) {}
+  constructor(private readonly userRepository: UserRepository) {}
 
   async create(account: CreateUserDto) {
-    return await this.accountRepository.create(account);
+    return await this.userRepository.create(account);
   }
 
   async delete(id: number) {
-    const account = await this.accountRepository.getById(id);
-    if (!account) {
+    const userEntity = await this.userRepository.getById(id);
+    if (!userEntity) {
       throw new HttpException('Conta inexistente', HttpStatus.BAD_REQUEST);
     }
 
-    return await this.accountRepository.delete(id);
+    return await this.userRepository.delete(id);
   }
 
   async update(account: UpdateUserDto) {
-    return this.accountRepository.update(account);
+    return this.userRepository.update(account);
   }
 
   async getById(id: number) {
-    const account = await this.accountRepository.getById(id);
-    if (!account) {
-      throw new HttpException('Conta inexistente', HttpStatus.BAD_REQUEST);
+    const user = await this.userRepository.getById(id);
+    if (!user) {
+      throw new HttpException('Usuário inexistente', HttpStatus.BAD_REQUEST);
     }
 
-    return account;
+    return user;
+  }
+
+  async getByEmail(email: string) {
+    const user = await this.userRepository.getByEmail(email);
+    if (!user) {
+      throw new HttpException('Usuário inválido!', HttpStatus.BAD_REQUEST);
+    }
+
+    return user;
   }
 }

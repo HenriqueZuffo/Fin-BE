@@ -13,4 +13,6 @@ export abstract class UserRepository {
   abstract delete(accountId: number): Promise<void>;
 
   abstract getById(id: number): Promise<UserEntity>;
+
+  abstract getByEmail(email: string): Promise<UserEntity>;
 }

@@ -1,6 +1,6 @@
-import { Account } from '@prisma/client';
+import { Users } from '@prisma/client';
 
-export class UserEntity implements Account {
+export class UserEntity implements Users {
   id: number;
   name: string;
   email: string;

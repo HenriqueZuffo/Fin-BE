@@ -16,25 +16,25 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async signIn(id: number, password: string) {
-    const account = await this.userService.getById(id).then((acc) => {
+  async signIn(email: string, password: string) {
+    const user = await this.userService.getByEmail(email).then((acc) => {
       return acc;
     });
 
-    if (!account) {
+    if (!user) {
       throw new HttpException('Login inválido', HttpStatus.UNAUTHORIZED);
     }
 
-    const isSamePassword = await bcrypt.compare(account.password, password);
+    const isSamePassword = await bcrypt.compare(user.password, password);
 
     if (!isSamePassword) {
       throw new HttpException('Login inválido', HttpStatus.UNAUTHORIZED);
     }
 
     const payload = {
-      account: account.id,
-      name: account.name,
-      email: account.email,
+      account: user.id,
+      name: user.name,
+      email: user.email,
     };
 
     return {

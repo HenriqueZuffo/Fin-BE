@@ -11,27 +11,27 @@ export class PostgresUserRepository extends UserRepository {
     super();
   }
 
-  async create(account: CreateUserDto): Promise<UserEntity> {
+  async create(user: CreateUserDto): Promise<UserEntity> {
     return this.prisma.users.create({
-      data: account,
+      data: user,
     });
   }
 
-  async delete(accountId: number): Promise<void> {
+  async delete(userId: number): Promise<void> {
     await this.prisma.users.delete({
       where: {
-        id: accountId,
+        id: userId,
       },
     });
 
     return;
   }
 
-  async update(account: UpdateUserDto): Promise<void> {
+  async update(user: UpdateUserDto): Promise<void> {
     await this.prisma.users.update({
-      data: account,
+      data: user,
       where: {
-        id: account.id,
+        id: user.id,
       },
     });
 
@@ -42,6 +42,14 @@ export class PostgresUserRepository extends UserRepository {
     return this.prisma.users.findFirst({
       where: {
         id: id,
+      },
+    });
+  }
+
+  getByEmail(email: string): Promise<UserEntity> {
+    return this.prisma.users.findFirst({
+      where: {
+        email: email,
       },
     });
   }
